@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { drawGrid, drawWaveform, drawDeadZones } from '../utils/waveform';
-import { PWMEngineState } from '../hooks/usePWMEngine';
+import type { PWMEngineState } from '../hooks/usePWMEngine';
 
 interface OscilloscopeProps {
   state: PWMEngineState;
