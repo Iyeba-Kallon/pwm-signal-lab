@@ -89,9 +89,9 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col-reverse md:flex-row p-4 gap-6 overflow-hidden">
+      <main className="flex-1 flex flex-col-reverse md:flex-row p-4 gap-6 overflow-y-auto md:overflow-hidden">
         {/* Left Panel */}
-        <div className="w-full md:w-[340px] flex flex-col gap-4 overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+        <div className="w-full md:w-[340px] flex flex-col gap-4 md:overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent h-auto md:h-full">
           <ComplementaryToggle 
             isComplementary={state.isComplementary} 
             onChange={(val) => updateState({ isComplementary: val })} 
