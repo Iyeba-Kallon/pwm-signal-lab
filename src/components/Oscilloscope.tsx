@@ -94,6 +94,7 @@ export default function Oscilloscope({ state, generateWaveformPoints }: Oscillos
       <canvas
         ref={canvasRef}
         style={{ width: '100%', height: '100%', display: 'block' }}
+      />
       {/* Cycles Visible Control */}
       <div className="absolute top-4 right-4 flex items-center gap-2 bg-slate-900/80 p-2 rounded-md border border-slate-700 backdrop-blur-sm z-10">
         <label className="text-xs text-slate-300 font-medium">Cycles:</label>
