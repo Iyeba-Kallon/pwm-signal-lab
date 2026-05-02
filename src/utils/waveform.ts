@@ -42,7 +42,7 @@ export function drawGrid(
   ctx.stroke();
   
   // Labels
-  ctx.fillStyle = '#94a3b8'; // slate-400
+  ctx.fillStyle = '#cbd5e1'; // slate-300
   ctx.font = '12px monospace';
   ctx.textBaseline = 'bottom';
   
@@ -50,9 +50,9 @@ export function drawGrid(
   for (let i = 0; i <= numVLines; i++) {
     const v = amplitude - (amplitude / numVLines) * i;
     const y = (height / numVLines) * i;
-    if (i !== numVLines) { // Avoid text at very bottom edge
-      ctx.fillText(`${v.toFixed(1)}V`, 5, Math.max(15, y + 14));
-    }
+    // For the last line (0V), shift it up so it's not cut off by the canvas edge
+    const labelY = i === numVLines ? y - 4 : Math.max(15, y + 14);
+    ctx.fillText(`${v.toFixed(1)}V`, 5, labelY);
   }
 
   // X-axis label unit (ms or us)
