@@ -1,5 +1,5 @@
 import React from 'react';
-import { PWMEngineState } from '../hooks/usePWMEngine';
+import type { PWMEngineState } from '../hooks/usePWMEngine';
 
 interface ControlPanelProps {
   state: PWMEngineState;
