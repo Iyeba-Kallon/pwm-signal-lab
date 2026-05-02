@@ -73,8 +73,7 @@ export function usePWMEngine() {
         // Calculate the actual time at this pixel
         const t = (x / canvasWidth) * totalTimeS + effectiveTimeOffsetS;
         
-        // Find position within the current cycle
-        const cycleTime = t % periodS;
+        const cycleTime = ((t % periodS) + periodS) % periodS;
         
         // PWM A is HIGH during [0, tOnS - deadTimeS] theoretically,
         // Wait, dead time means both are LOW. 
@@ -101,12 +100,8 @@ export function usePWMEngine() {
         }
 
         // Map voltage to Y pixel (invert Y because canvas 0 is top)
-        // Leave a small margin (10% of height) top and bottom
-        const marginY = canvasHeight * 0.1;
-        const availableHeight = canvasHeight - 2 * marginY;
-        
-        // Max voltage is 5V, so map 0-5V to available height
-        const mapY = (v: number) => canvasHeight - marginY - (v / 5) * availableHeight;
+        // Max voltage is 5V, so map 0-5V to canvasHeight
+        const mapY = (v: number) => canvasHeight - (v / 5) * canvasHeight;
 
         pointsA.push({ x, y: mapY(valA) });
         if (isComplementary) {
