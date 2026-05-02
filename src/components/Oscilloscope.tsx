@@ -14,7 +14,7 @@ export default function Oscilloscope({ state, generateWaveformPoints }: Oscillos
   const timeOffsetRef = useRef(0);
   const animationRef = useRef<number>();
   const lastTimeRef = useRef<number>(performance.now());
-  const cyclesVisible = 3;
+  const [cyclesVisible, setCyclesVisible] = useState(3);
 
   // Handle Resize
   useEffect(() => {
@@ -68,14 +68,14 @@ export default function Oscilloscope({ state, generateWaveformPoints }: Oscillos
 
       // 3. Draw Dead Zones
       if (state.isComplementary) {
-        drawDeadZones(ctx, deadZones, dimensions.height, 'rgba(239, 68, 68, 0.15)');
+        drawDeadZones(ctx, deadZones, dimensions.height, 'rgba(239, 68, 68, 0.35)');
       }
 
       // 4. Draw Waveforms
-      drawWaveform(ctx, pointsA, '#3b82f6', 2); // blue-500
+      drawWaveform(ctx, pointsA, '#3b82f6', 3); // blue-500
       
       if (state.isComplementary) {
-        drawWaveform(ctx, pointsB, '#f59e0b', 2); // amber-500
+        drawWaveform(ctx, pointsB, '#f59e0b', 3); // amber-500
       }
 
       animationRef.current = requestAnimationFrame(render);
@@ -87,16 +87,29 @@ export default function Oscilloscope({ state, generateWaveformPoints }: Oscillos
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [dimensions, state, generateWaveformPoints]);
+  }, [dimensions, state, generateWaveformPoints, cyclesVisible]);
 
   return (
     <div ref={containerRef} className="w-full h-full min-h-[300px] bg-slate-900 border border-slate-700 rounded-lg overflow-hidden relative">
       <canvas
         ref={canvasRef}
         style={{ width: '100%', height: '100%', display: 'block' }}
-      />
+      {/* Cycles Visible Control */}
+      <div className="absolute top-4 right-4 flex items-center gap-2 bg-slate-900/80 p-2 rounded-md border border-slate-700 backdrop-blur-sm z-10">
+        <label className="text-xs text-slate-300 font-medium">Cycles:</label>
+        <input 
+          type="range" 
+          min="1" 
+          max="10" 
+          value={cyclesVisible} 
+          onChange={(e) => setCyclesVisible(parseInt(e.target.value))}
+          className="w-20 accent-blue-500"
+        />
+        <span className="text-xs text-slate-300 w-4 text-center">{cyclesVisible}</span>
+      </div>
+
       {/* Edge Case Warnings Overlay */}
-      <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none">
+      <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none z-10">
         {state.frequency > 20000 && (
           <div className="bg-amber-500/20 text-amber-400 px-3 py-1 rounded text-xs font-semibold border border-amber-500/50 backdrop-blur-sm">
             Ultrasonic range — above human hearing threshold

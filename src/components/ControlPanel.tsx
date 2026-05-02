@@ -30,7 +30,9 @@ export default function ControlPanel({ state, updateState }: ControlPanelProps) 
       {/* Frequency */}
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <label className="text-sm font-medium text-slate-300">Frequency (Hz)</label>
+          <label className="text-sm font-medium text-slate-300">
+            {state.frequency >= 1000 ? `Frequency (${(state.frequency / 1000).toFixed(1)} kHz)` : 'Frequency (Hz)'}
+          </label>
           <input
             type="number"
             min="1"
