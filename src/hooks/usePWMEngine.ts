@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Point, DeadZoneRect } from '../utils/waveform';
+import type { Point, DeadZoneRect } from '../utils/waveform';
 
 export interface PWMEngineState {
   frequency: number; // Hz
